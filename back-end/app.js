@@ -22,6 +22,12 @@ mongoose
 const { Message } = require('./models/Message')
 const { User } = require('./models/User')
 
+
+// a route to handle fetching data for the about us page
+app.get('/about-us', async (req, res) => {
+  // send the data as a json file
+})
+
 // a route to handle fetching all messages
 app.get('/messages', async (req, res) => {
   // load all messages from database
