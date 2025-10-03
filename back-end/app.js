@@ -26,6 +26,22 @@ const { User } = require('./models/User')
 // a route to handle fetching data for the about us page
 app.get('/about-us', async (req, res) => {
   // send the data as a json file
+  try {
+    return res.json({
+      paragraphs: [
+        'Hi! I’m a junior at NYU Abu Dhabi studying Computer Science. I grew up in Colombo, Sri Lanka, and one of my favorite parts of college has been the chance to study in different places around the world. I’ve taken courses in Florence, Paris, and Kigali, and right now I’m spending the semester in New York, which has been a completely new and exciting experience for me.',
+        'When I’m not in class or working on projects, I love traveling and exploring new cultures, usually with my camera in hand. Photography helps me slow down and notice the little details in everyday life. I also enjoy playing badminton to stay active, and gaming when I just want to relax and have fun. Altogether, I’d say I’m someone who’s curious about the world, enjoys learning new things, and is always up for an adventure.'
+      ],
+      imageUrl: '/profile.jpeg',
+      status: 'all good',
+    })
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({
+      error: err,
+      status: 'failed to retrieve about information from backend'
+    })
+  }
 })
 
 // a route to handle fetching all messages

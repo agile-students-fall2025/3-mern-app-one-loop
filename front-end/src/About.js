@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 import './About.css'
 
 /* 
@@ -8,14 +9,39 @@ The about js file represents the about page of this app
 */
 
 const About = props => {
+    const [text, setText] = useState('')
+    const [imageUrl, setImageUrl] = useState('')
+    const [loaded, setLoaded] = useState(false)
+    const [error, setError] = useState('')
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_SERVER_HOSTNAME}/about-us`)
+            .then(response => {
+                // axios bundles all response data into the response.data property
+                setText(response.data.paragraphs)
+                setImageUrl(response.data.imageUrl)
+            })
+            .catch(err => {
+                // convert error message into a string so we can simply dump it to the screen
+                const errMsg = JSON.stringify(err, null, 2)
+                setError(errMsg)
+            })
+            .finally(() => setLoaded(true))
+    }, [])
+
+
     return (
         <>
             <h1>About Us!</h1>
 
-            <div>
-                <p>This is some placeholder text about myself</p>
-                <p>Remove this placeholder and replace it with text that is fetched from the backend</p>
-                <img src="https://www.saadsifar.com/images/profile.jpeg" alt="an image of myself fetched form the backend"></img>
+            {error && <p className="About-error">{error}</p>}
+            {!loaded && <p>Loading ...</p>}
+            <div className="about-section">
+                {/* Map over the paragraphs array and render each one */}
+                {text && text.map((paragraph, index) => (
+                    <p key={index} className="about-para">{paragraph}</p>
+                ))}
+                {imageUrl && <img src={imageUrl} className="profile-pic" alt="profile picture" />}
             </div>
 
         </>

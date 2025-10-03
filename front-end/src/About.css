@@ -1,6 +1,25 @@
 
-img {
+.profile-pic {
     width: 200px;
     height: 200px;
     border-radius: 50%;
+}
+
+
+
+.about-para:nth-child(1) {
+    margin-top: 20px;
+    
+}
+
+.about-para {
+    width: 50%;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.about-section {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
